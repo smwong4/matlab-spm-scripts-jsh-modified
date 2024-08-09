@@ -1,4 +1,9 @@
 %% MATLAB AND SPM12 BATCH SCRIPTING EXAMPLE: 
+
+% Based on script by Stephan Heunis, edited by Sara Wong
+% Original script was Copyright (C) Stephan Heunis 2018; See original online tutorial for full details: https://www.fmrwhy.com/2018/06/28/spm12-matlab-scripting-tutorial-1/
+%
+%
 % Processing a task-based single-subject fMRI dataset.
 % 
 % Prerequisites:
@@ -15,23 +20,48 @@
 % - spm_setupTaskContrast_jsh
 % - spm_runResults_jsh
 % 
-% See online tutorial for full details: https://www.fmrwhy.com/2018/06/28/spm12-matlab-scripting-tutorial-1/
-%__________________________________________________________________________
-% Copyright (C) Stephan Heunis 2018
+% 
 
 %% INITIALIZATION
 % Initialize file locations, image file names and other variables
-data_dir = '/Users/jheunis/Desktop/Blog test';
-spm_dir = '/Users/jheunis/Documents/MATLAB/spm12';
+data_dir = '/Users/candylab/Documents/MATLAB/ds000157';
+spm_dir = '/Users/candylab/Documents/MATLAB/spm12';
 addpath(spm_dir);
 subj = 'sub-01';
-s_fn = [data_dir filesep subj filesep 'anat' filesep subj '_T1w.nii'];
-f_fn = [data_dir filesep subj filesep 'func' filesep subj '_task-passiveimageviewing_bold.nii'];
+s_fn = [data_dir filesep subj filesep 'anat' filesep subj '_T1w.nii.gz'];
+f_fn = [data_dir filesep subj filesep 'func' filesep subj '_task-passiveimageviewing_bold.nii.gz'];
 stats_dir = [data_dir filesep subj filesep 'stats'];
 if ~exist(stats_dir,'dir')
     mkdir(stats_dir)
 end
 fwhm = 6;  % mm
+
+
+
+%% CHECK IF FILES DOWNLOADED CORRECTLY
+% Check if the anatomical image file exists
+if exist(s_fn, 'file')
+    fprintf('Anatomical image file exists: %s\n', s_fn);
+else
+    error('Anatomical image file not found: %s\n', s_fn);
+end
+
+% Check if the functional image file exists
+if exist(f_fn, 'file')
+    fprintf('Functional image file exists: %s\n', f_fn);
+else
+    error('Functional image file not found: %s\n', f_fn);
+end
+
+% Additional checks (optional):
+% You can also check the file sizes to ensure they are as expected.
+anat_info = dir(s_fn);
+func_info = dir(f_fn);
+
+fprintf('Anatomical image file size: %d bytes\n', anat_info.bytes);
+fprintf('Functional image file size: %d bytes\n', func_info.bytes);
+
+% You could also add code to compare these sizes to expected values or use a checksum if you have one.
 
 %% PREPROCESSING
 disp('PREPROCESSING')
