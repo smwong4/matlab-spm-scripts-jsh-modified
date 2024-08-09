@@ -27,14 +27,17 @@
 data_dir = '/Users/candylab/Documents/MATLAB/ds000157';
 spm_dir = '/Users/candylab/Documents/MATLAB/spm12';
 addpath(spm_dir);
-subj = 'sub-01';
-s_fn = [data_dir filesep subj filesep 'anat' filesep subj '_T1w.nii.gz'];
-f_fn = [data_dir filesep subj filesep 'func' filesep subj '_task-passiveimageviewing_bold.nii.gz'];
+subj = 'sub-01'; % can change subject # if desired
+gunzip([data_dir filesep subj filesep 'anat' filesep subj '_T1w.nii.gz']); % unzips nifty file. If already unzipped (ends in .nii), you can comment out this line
+s_fn = [data_dir filesep subj filesep 'anat' filesep subj '_T1w.nii'];
+gunzip([data_dir filesep subj filesep 'func' filesep subj '_task-passiveimageviewing_bold.nii.gz'])% unzips nifty file. If already unzipped (ends in .nii), you can comment out this line
+f_fn = [data_dir filesep subj filesep 'func' filesep subj '_task-passiveimageviewing_bold.nii'];
 stats_dir = [data_dir filesep subj filesep 'stats'];
 if ~exist(stats_dir,'dir')
     mkdir(stats_dir)
 end
 fwhm = 6;  % mm
+
 
 
 
