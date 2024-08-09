@@ -22,20 +22,26 @@
 
 %% INITIALIZATION
 % Initialize file locations, image file names, and other variables
+disp('CONFIGURING PATHS AND PARAMETERS')
 
-% Configure paths and parameters
-data_dir = '/Users/candylab/Documents/MATLAB/ds000157';  % Path to data
-spm_dir = '/Users/candylab/Documents/MATLAB/spm12';      % Path to SPM12
+% Configure paths for dataset, SPM, and git repository
+% Example of using absolute path if the directory is not already in MATLAB path:
+% spm_dir = '/Users/candylab/Documents/MATLAB/spm12' 
+spm_dir = 'spm12'  % Path to SPM.
+data_dir = ''ds000157';  % Path to data. 
+git_dir = 'neuronest-matlab-tutorial';  % Path to github repository
+addpath(spm_dir);
+addpath(data_dir);
+addpath(git_dir);
+
+% Configure parameters
 subj = 'sub-01';                                         % Subject ID. Can be changed to any subject id in data set
 fwhm = 6;                                                % Smoothing kernel (mm)
 
-% Add Data and SPM to MATLAB path (if not done already)
-% addpath(spm_dir);
-% addpath(data_dir);
 
-% Unzipping nifty files if needed
-gunzip([data_dir filesep subj filesep 'anat' filesep subj '_T1w.nii.gz']); % unzips nifty file. If already unzipped (ends in .nii), you can comment out this line
-gunzip([data_dir filesep subj filesep 'func' filesep subj '_task-passiveimageviewing_bold.nii.gz'])% unzips nifty file. If already unzipped (ends in .nii), you can comment out this line
+% Unzip nifty files
+gunzip([data_dir filesep subj filesep 'anat' filesep subj '_T1w.nii.gz']); 
+gunzip([data_dir filesep subj filesep 'func' filesep subj '_task-passiveimageviewing_bold.nii.gz'])
 
 % Creating elements for file locations
 s_fn = [data_dir filesep subj filesep 'anat' filesep subj '_T1w.nii'];
@@ -47,9 +53,7 @@ if ~exist(stats_dir,'dir')
     mkdir(stats_dir)
 end
 
-
-%% CHECK IF FILES DOWNLOADED CORRECTLY
-% Verify that necessary files exist
+disp('CHECKING FOR FILES')
 
 % Check for the anatomical image file
 if exist(s_fn, 'file')
@@ -70,6 +74,8 @@ anat_info = dir(s_fn);
 func_info = dir(f_fn);
 fprintf('Anatomical image file size: %d bytes\n', anat_info.bytes);
 fprintf('Functional image file size: %d bytes\n', func_info.bytes);
+
+disp('Files are all set!')
 
 %% PREPROCESSING
 disp('PREPROCESSING')
