@@ -26,7 +26,7 @@
 % Configure paths and parameters
 data_dir = '/Users/candylab/Documents/MATLAB/ds000157';  % Path to data
 spm_dir = '/Users/candylab/Documents/MATLAB/spm12';      % Path to SPM12
-subj = 'sub-14';                                         % Subject ID. Can be changed to any subject id in data set
+subj = 'sub-01';                                         % Subject ID. Can be changed to any subject id in data set
 fwhm = 6;                                                % Smoothing kernel (mm)
 
 % Add Data and SPM to MATLAB path (if not done already)
